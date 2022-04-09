@@ -1,8 +1,28 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Sailfish.WebView 1.0
+import io.thp.pyotherside 1.5
 
 ApplicationWindow {
+
+    // Python connections and signals, callable from QML side
+    Python {
+        id: py
+        Component.onCompleted: {
+            addImportPath(Qt.resolvedUrl('.'));
+            importModule('server', function () {});
+
+              setHandler('finished', function(newvalue) {
+                  console.debug(newvalue)
+              });
+            startDownload();
+        }
+        function startDownload() {
+            call('server.downloader.serve', function() {});
+            console.debug("called")
+
+        }
+   }
    initialPage: Page {
        Row {
            id: buttons
@@ -41,10 +61,9 @@ ApplicationWindow {
            anchors.top: label.bottom
            anchors.bottom: parent.bottom
            width: parent.width
-           url: Qt.resolvedUrl("site.html")
-
+           url: "http://localhost:8000/index.html"
            onViewInitialized: {
-               webview.loadFrameScript(Qt.resolvedUrl("framescript.js"));
+               webview.loadFrameScript("http://localhost:8000/framescript.js");
                webview.addMessageListener("webview:action")
            }
 
@@ -52,9 +71,12 @@ ApplicationWindow {
                switch (message) {
                case "webview:action":
                    label.text = {"four": "4", "five": "5", "six": "6"}[data.topic]
+                   console.debug(data.topic)
                    break
                }
            }
        }
+
+
    }
 }

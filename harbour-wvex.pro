@@ -16,7 +16,8 @@ CONFIG += sailfishapp_qml
 
 DISTFILES += qml/harbour-wvex.qml \
     framescript.js \
-    site.html \
+    qml/server.py \
+    qml/index.html \
     rpm/harbour-wvex.changes.in \
     rpm/harbour-wvex.changes.run.in \
     rpm/harbour-wvex.spec \
