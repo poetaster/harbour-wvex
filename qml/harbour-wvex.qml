@@ -63,7 +63,7 @@ ApplicationWindow {
            width: parent.width
            url: "http://localhost:8000/index.html"
            onViewInitialized: {
-               webview.loadFrameScript("http://localhost:8000/framescript.js");
+               webview.loadFrameScript(Qt.resolvedUrl("framescript.js"));
                webview.addMessageListener("webview:action")
            }
 
