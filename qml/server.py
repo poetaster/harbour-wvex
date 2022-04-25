@@ -17,7 +17,7 @@ import socketserver
 PORT = 8000
 directory = '/usr/share/harbour-wvex/qml'
 Handler = http.server.SimpleHTTPRequestHandler
-#Handler = partial(http.server.SimpleHTTPRequestHandler, directory=str(directory))
+os.chdir(directory)
 
 def serveMe():
     with socketserver.TCPServer(("", PORT), Handler) as httpd:
